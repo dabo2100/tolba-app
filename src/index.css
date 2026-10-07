@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import 'tailwindcss';
+
+:root {
+  --bg: #f0f4f8;
+  --surface: #ffffff;
+  --border: #e2e8f0;
+  --primary: #0369a1;
+  --primary-dark: #0c4a6e;
+  --sidebar-w: 256px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--bg);
+  color: #0f172a;
+  direction: rtl;
+}
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+/* ── Layout shells ───────────────────────────────── */
+.app-shell       { display: flex; min-height: 100vh; direction: rtl; background: var(--bg); }
+.app-sidebar     { width: var(--sidebar-w); background: #0c4a6e; display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh; flex-shrink: 0; transition: transform 0.25s; z-index: 40; }
+.app-main        { flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
+.app-content     { flex: 1; overflow-y: auto; padding: 22px 24px; }
+
+/* ── Topbar ──────────────────────────────────────── */
+.topbar          { background: #fff; border-bottom: 1px solid var(--border); padding: 0 26px; height: 62px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
+.topbar-right    { display: flex; align-items: center; gap: 10px; }
+.topbar-search   { display: flex; align-items: center; gap: 7px; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px; }
+.topbar-search input { background: none; border: none; outline: none; font-size: 13px; font-family: 'Cairo', sans-serif; color: #1e293b; width: 150px; direction: rtl; }
+.topbar-user     { display: flex; align-items: center; gap: 8px; padding: 5px 12px; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; }
+.hamburger       { display: none; background: none; border: none; cursor: pointer; font-size: 20px; padding: 4px 8px; color: #0c4a6e; }
+
+/* ── Grid helpers ────────────────────────────────── */
+.grid-3          { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.grid-4          { display: grid; grid-template-columns: repeat(4, 1fr); gap: 13px; }
+.grid-5          { display: grid; grid-template-columns: repeat(5, 1fr); gap: 13px; }
+.grid-7          { display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; }
+.grid-2col       { display: grid; grid-template-columns: 1fr 380px; gap: 16px; }
+.grid-2col-eq    { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-hosp-type  { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+.grid-wf         { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+
+/* ── Form grids ──────────────────────────────────── */
+.form-grid-4     { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.form-grid-3     { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.form-grid-2     { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.units-row       { display: grid; grid-template-columns: 2fr 1fr 1fr auto auto; gap: 10px; align-items: center; }
+.units-row-add   { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; align-items: end; }
+.occ-grid        { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.occ-stats-grid  { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+/* ── Login ───────────────────────────────────────── */
+.login-wrap      { min-height: 100vh; display: flex; direction: rtl; font-family: 'Cairo', sans-serif; background: #0c4a6e; }
+.login-brand     { flex: 1; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+.login-panel     { width: 440px; background: #fff; display: flex; flex-direction: column; justify-content: center; padding: 48px 44px; flex-shrink: 0; }
+
+/* ── Overlay for mobile sidebar ──────────────────── */
+.sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 39; }
+
+/* ── Section label ───────────────────────────────── */
+.section-label   { font-size: 13px; font-weight: 700; color: #64748b; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.section-dot     { width: 4px; height: 16px; border-radius: 2px; display: inline-block; }
+
+/* ════════════════════════════════════════════════════
+   RESPONSIVE — Tablet  ≤ 1024px
+   ════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .app-sidebar {
+    position: fixed;
+    top: 0; right: 0;
+    height: 100vh;
+    transform: translateX(100%);
+  }
+  .app-sidebar.open { transform: translateX(0); }
+  .sidebar-overlay.open { display: block; }
+  .hamburger { display: block; }
+  .topbar-search input { width: 110px; }
+
+  .grid-7          { grid-template-columns: repeat(4, 1fr); }
+  .grid-5          { grid-template-columns: repeat(3, 1fr); }
+  .grid-3          { grid-template-columns: repeat(3, 1fr); }
+  .grid-2col       { grid-template-columns: 1fr; }
+  .grid-2col-eq    { grid-template-columns: 1fr; }
+  .grid-hosp-type  { grid-template-columns: repeat(4, 1fr); }
+
+  .form-grid-4     { grid-template-columns: repeat(2, 1fr); }
+  .form-grid-3     { grid-template-columns: repeat(2, 1fr); }
+  .occ-grid        { grid-template-columns: repeat(2, 1fr); }
+  .occ-stats-grid  { grid-template-columns: repeat(2, 1fr); }
+
+  .login-brand { min-height: 260px; flex: none; }
+  .login-wrap  { flex-direction: column; }
+  .login-panel { width: 100%; padding: 32px 28px; }
+}
+
+/* ════════════════════════════════════════════════════
+   RESPONSIVE — Mobile  ≤ 640px
+   ════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  .app-content  { padding: 14px 10px; }
+  .topbar       { padding: 0 12px; height: 54px; }
+  .topbar-search { display: none; }
+  .topbar-user .user-name { display: none; }
+
+  .grid-3          { grid-template-columns: 1fr; }
+  .grid-4          { grid-template-columns: repeat(2, 1fr); }
+  .grid-5          { grid-template-columns: repeat(2, 1fr); }
+  .grid-7          { grid-template-columns: repeat(2, 1fr); }
+  .grid-2col       { grid-template-columns: 1fr; }
+  .grid-2col-eq    { grid-template-columns: 1fr; }
+  .grid-hosp-type  { grid-template-columns: repeat(2, 1fr); }
+  .grid-wf         { grid-template-columns: 1fr; }
+
+  .form-grid-4     { grid-template-columns: 1fr; }
+  .form-grid-3     { grid-template-columns: 1fr; }
+  .form-grid-2     { grid-template-columns: 1fr; }
+  .occ-grid        { grid-template-columns: 1fr; }
+  .occ-stats-grid  { grid-template-columns: repeat(2, 1fr); }
+
+  .units-row       { grid-template-columns: 1fr 1fr; }
+  .units-row-add   { grid-template-columns: 1fr 1fr; }
+
+  .login-brand { min-height: 180px; }
+  .login-panel { padding: 20px 16px; }
+
+  /* TopBar: shrink user display */
+  .topbar-right    { gap: 6px; }
+
+  /* DataEntry header */
+  .entry-header-row { flex-direction: column; gap: 10px; align-items: flex-start !important; }
+  .entry-stats-row  { flex-wrap: wrap; gap: 8px; }
+}
+
+/* ════════════════════════════════════════════════════
+   RESPONSIVE — Large desktop  ≥ 1400px
+   ════════════════════════════════════════════════════ */
+@media (min-width: 1400px) {
+  .grid-7          { grid-template-columns: repeat(7, 1fr); }
+  .form-grid-4     { grid-template-columns: repeat(4, 1fr); }
+  .occ-grid        { grid-template-columns: repeat(4, 1fr); }
+}
